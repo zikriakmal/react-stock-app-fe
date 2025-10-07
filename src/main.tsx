@@ -5,6 +5,7 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import LoginPage from './page/LoginPage';
 import DashboardPage from './page/DashboardPage/index.tsx';
+import { LoadingProvider } from './contexts/LoadingContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <LoadingProvider>
+      <RouterProvider router={router} />
+    </LoadingProvider>
   </StrictMode>,
 )

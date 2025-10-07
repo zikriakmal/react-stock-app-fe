@@ -1,6 +1,6 @@
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { Breadcrumb, Divider, Dropdown, Table, type MenuProps, type TableColumnsType } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from "react-router";
 
 interface DataType {
@@ -97,7 +97,12 @@ const data: DataType[] = [
 
 const DashboardPage: React.FC = () => {
     const navigation = useNavigate();
-
+    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        if (!accessToken) {
+            navigation('/login');
+        }
+    }, [])
     const items: MenuProps['items'] = [
         {
             label: (
@@ -109,7 +114,11 @@ const DashboardPage: React.FC = () => {
         },
         {
             label: (
-                <div onClick={() => navigation('/login')}>
+                <div onClick={() => {
+                    localStorage.removeItem('accessToken')
+                    navigation('/login');
+                }}
+                >
                     <LogoutOutlined /> Logout
                 </div>
             ),
