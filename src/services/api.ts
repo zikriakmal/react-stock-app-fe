@@ -11,26 +11,27 @@ const api = axios.create({
 });
 
 // Request interceptor (optional)
-// api.interceptors.request.use(
-//     (config) => {
-//         // Example: attach token
-//         const token = localStorage.getItem("token");
-//         if (token) {
-//             config.headers.Authorization = `Bearer ${token}`;
-//         }
-//         return config;
-//     },
-//     (error) => Promise.reject(error)
-// );
+api.interceptors.request.use(
+    (config) => {
+        // Example: attach token
+        const token = localStorage.getItem("accessToken");
+        console.log(token,"what is token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
 
 // Response interceptor (optional)
-// api.interceptors.response.use(
-//     (response) => response.data, // simplify response
-//     (error) => {
-//         console.error("API Error:", error.response || error.message);
-//         return Promise.reject(error);
-//     }
-// );
+api.interceptors.response.use(
+    (response) => response.data, // simplify response
+    (error) => {
+        console.error("API Error:", error.response || error.message);
+        return Promise.reject(error);
+    }
+);
 
 // Usage examples
 export const getData = (endpoint: string, params = {}) =>

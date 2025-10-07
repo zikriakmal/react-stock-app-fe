@@ -15,29 +15,31 @@ const LoginPage = () => {
             navigate('/dashboard');
         }
     }, [])
+
+    const setDataToLocalStorage = (email: string, accesToken: string) => {
+        localStorage.setItem("email", email);
+        localStorage.setItem("accessToken", accesToken);
+    }
+
     return (
         <div
-            style={{ background: "url('/login-page.jpg') no-repeat center" }}
+            style={{ background: "url('/login-page.jpg') no-repeat", backgroundSize: 'cover' }}
             className="flex-col justify-center items-center min-h-dvh flex flex-1 bg-blue-950">
             <Formik
                 validationSchema={loginFormSchema}
                 initialValues={{ email: '', password: '' }}
-                onSubmit={(values, { setSubmitting, setFieldValue }) => {
-                    console.log(values);
-                    setSubmitting(true)
-                    showLoading()
+                onSubmit={(values, { setSubmitting, resetForm }) => {
+                    setSubmitting(true);
+                    showLoading();
                     postData('auth/login', values).then((dt) => {
-                        localStorage.setItem("email", dt?.data?.data?.user?.email);
-                        localStorage.setItem("accessToken", dt?.data?.data?.access_token);
-                        setFieldValue('email', '');
-                        setFieldValue('password', '');
+                        setDataToLocalStorage(dt?.data?.user?.email, dt?.data?.access_token);
+                        resetForm();
                         setSubmitting(false);
                         hideLoading();
                         navigate('/dashboard');
                     }).catch((e) => {
                         console.log(e);
-                        setFieldValue('email', '');
-                        setFieldValue('password', '');
+                        resetForm();
                         hideLoading();
                         setSubmitting(false);
                     })
@@ -49,12 +51,12 @@ const LoginPage = () => {
                             <div>
                                 <p className="text-left mb-2 text-white">Email</p>
                                 <Input size="large" type="email" placeholder="Email" {...getFieldProps("email")} />
-                                {errors.email && touched.email ? <p className="text-red-700 text-sm">{errors.email}</p> : null}
+                                {errors.email && touched.email ? <p className="text-red-700 text-sm italic mt-0.5">{errors.email}</p> : null}
                             </div>
                             <div>
                                 <p className="text-left mb-2 text-white">Password</p>
                                 <Input size="large" type="password" placeholder="Password" {...getFieldProps("password")} />
-                                {errors.password && touched.password ? <p className="text-red-700 text-sm">{errors.password}</p> : null}
+                                {errors.password && touched.password ? <p className="text-red-700 text-sm italic mt-0.5">{errors.password}</p> : null}
                             </div>
                             <div className="flex-1 flex items-end">
                                 <Button className="flex-1" disabled={isSubmitting || !isValid} htmlType="submit" size="large" color="pink" variant="solid">Login</Button>
