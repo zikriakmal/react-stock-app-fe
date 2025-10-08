@@ -1,7 +1,7 @@
+import { UserOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import { getAllUsers, type User } from "../../services/users-service";
 import DashboardPage from "../DashboardPage";
-import { UserOutlined } from "@ant-design/icons";
 
 interface DataType extends User {
     key: React.Key;
@@ -34,9 +34,8 @@ const MainPage = () => {
     )
 }
 
-const Card = ({ icon, color, title, value }: { icon: React.ReactNode; color: string; title: string; value: number }) => (
+const Card = ({ color, title, value }: { icon: React.ReactNode; color: string; title: string; value: number }) => (
     <div className="shadow-md w-52 hover:scale-110 hover:cursor-pointer transition bg-white items-center justify-center p-10 text-center gap-3 flex-col flex rounded-sm">
-        {/* <div className={`${color} w-8 h-8`}>{icon}</div> */}
         <p className={`font-sans text-xs ${color}`}>{title}</p>
         <p className="font-semibold text-xl">{value}</p>
     </div>
