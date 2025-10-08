@@ -10,7 +10,7 @@ interface DataType extends User {
 
 const columns: TableColumnsType<DataType> = [
     {
-        title: 'id',
+        title: 'ID',
         dataIndex: 'id',
     },
     {
@@ -29,11 +29,13 @@ const columns: TableColumnsType<DataType> = [
     {
         title: 'Created At',
         dataIndex: 'created_at',
+        width: 200,
         render: (value) => new Date(value).toLocaleString(),
     },
     {
         title: 'Updated At',
         dataIndex: 'updated_at',
+        width: 200,
         render: (value) => new Date(value).toLocaleString(),
     },
 ];
@@ -50,16 +52,15 @@ const UsersPage = () => {
                     ...dt
                 }
                 return newDt
-            }
-            ))
+            }));
             setTimeout(() => {
                 loading.hideLoading();
-            }, 1000);
+            }, 500);
         })
     }, []);
     return (
         <DashboardPage>
-            <Table<DataType> columns={columns} dataSource={users} size="middle" />
+            <Table<DataType> columns={columns} dataSource={users} size="large" />
         </DashboardPage>
     )
 }

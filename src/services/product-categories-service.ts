@@ -1,16 +1,15 @@
 import { getData, type ApiType } from "./api";
-export interface User {
+
+export interface ProductCategory {
     id: number,
     name: string,
-    email: string,
-    email_verified_at: Date | null,
-    created_at: Date,
-    updated_at: Date,
+    created_at?: Date,
+    updated_at?: Date
 }
 
-const getAllUsers = async (): Promise<ApiType<Array<User>>> => {
+const getAllProductCategory = async (): Promise<ApiType<Array<ProductCategory>>> => {
     try {
-        const data = await getData('users');
+        const data = await getData('product-categories');
         return {
             data: data.data,
             error: false
@@ -24,4 +23,4 @@ const getAllUsers = async (): Promise<ApiType<Array<User>>> => {
     }
 }
 
-export { getAllUsers };
+export { getAllProductCategory }

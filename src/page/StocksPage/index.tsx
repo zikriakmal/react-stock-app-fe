@@ -1,47 +1,53 @@
 import { Table, type TableColumnsType } from "antd";
 import { useEffect, useState } from "react";
-import { getAllUsers, type User } from "../../services/users-service";
+import type { Product } from "../../services/products-service";
+import { getAllStockTransactions, type StockTransaction } from "../../services/stock-service";
 import DashboardPage from "../DashboardPage";
 
-interface DataType extends User {
+interface DataType extends StockTransaction {
     key: React.Key;
 }
 
 const columns: TableColumnsType<DataType> = [
     {
-        title: 'id',
+        title: 'ID',
         dataIndex: 'id',
     },
     {
-        title: 'Name',
-        dataIndex: 'name',
+        title: 'Product',
+        dataIndex: 'product',
+        render: (value: Product) => value.name
     },
     {
-        title: 'Email',
-        dataIndex: 'email',
+        title: 'Quantity',
+        dataIndex: 'quantity'
     },
     {
-        title: 'Verified At',
-        dataIndex: 'email_verified_at',
-        render: (value) => value ? new Date(value).toLocaleString() : '-',
+        title: 'Transaction type',
+        dataIndex: 'transaction_type',
+        align: 'center',
+        render: (value: string) => <div className="flex-1 flex justify-center items-center">{(value === 'IN' ? <p className="text-xs px-8 bg-green-600 rounded-sm text-center text-white font-bold">IN</p> :
+            <p className="text-xs px-8 bg-red-600 rounded-sm  text-center text-white font-bold">OUT</p>)}</div>
     },
     {
         title: 'Created At',
         dataIndex: 'created_at',
+        width: 200,
         render: (value) => new Date(value).toLocaleString(),
     },
     {
         title: 'Updated At',
         dataIndex: 'updated_at',
+        width: 200,
         render: (value) => new Date(value).toLocaleString(),
     },
 ];
 
 const StocksPage = () => {
-    const [users, setUsers] = useState<DataType[]>([]);
+    const [stockTransactions, setStockTransactions] = useState<DataType[]>([]);
     useEffect(() => {
-        getAllUsers().then((dt) => {
-            setUsers(dt.data.map((dt) => {
+        getAllStockTransactions().then((dt) => {
+            setStockTransactions(dt.data.map((dt) => {
                 const newDt = {
                     key: dt.id.toString(),
                     ...dt
@@ -52,7 +58,7 @@ const StocksPage = () => {
     }, []);
     return (
         <DashboardPage>
-            <Table<DataType> columns={columns} dataSource={users} size="middle" />
+            <Table<DataType> columns={columns} dataSource={stockTransactions} size="large" />
         </DashboardPage>
     )
 }

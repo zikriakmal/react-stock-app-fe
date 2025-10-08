@@ -45,3 +45,9 @@ export const putData = (endpoint: string, data: any) =>
 
 export const deleteData = (endpoint: string) =>
     api.delete(endpoint);
+
+
+export interface ApiType<T> {
+    data: T,
+    error: boolean
+}

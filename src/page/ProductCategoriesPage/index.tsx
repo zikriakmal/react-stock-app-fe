@@ -1,15 +1,16 @@
 import { Table, type TableColumnsType } from "antd";
 import { useEffect, useState } from "react";
-import { getAllUsers, type User } from "../../services/users-service";
+import { useLoading } from "../../contexts/LoadingContext";
+import { getAllProductCategory, type ProductCategory } from "../../services/product-categories-service";
 import DashboardPage from "../DashboardPage";
 
-interface DataType extends User {
+interface DataType extends ProductCategory {
     key: React.Key;
 }
 
 const columns: TableColumnsType<DataType> = [
     {
-        title: 'id',
+        title: 'ID',
         dataIndex: 'id',
     },
     {
@@ -17,42 +18,40 @@ const columns: TableColumnsType<DataType> = [
         dataIndex: 'name',
     },
     {
-        title: 'Email',
-        dataIndex: 'email',
-    },
-    {
-        title: 'Verified At',
-        dataIndex: 'email_verified_at',
-        render: (value) => value ? new Date(value).toLocaleString() : '-',
-    },
-    {
         title: 'Created At',
         dataIndex: 'created_at',
+        width: 200,
         render: (value) => new Date(value).toLocaleString(),
     },
     {
         title: 'Updated At',
         dataIndex: 'updated_at',
+        width: 200,
         render: (value) => new Date(value).toLocaleString(),
     },
 ];
 
 const ProductCategoriesPage = () => {
-    const [users, setUsers] = useState<DataType[]>([]);
+    const [productCategories, setProductCategories] = useState<DataType[]>([]);
+    const loading = useLoading();
     useEffect(() => {
-        getAllUsers().then((dt) => {
-            setUsers(dt.data.map((dt) => {
+        loading.showLoading();
+        getAllProductCategory().then((dt) => {
+            setProductCategories(dt.data.map((dt) => {
                 const newDt = {
                     key: dt.id.toString(),
                     ...dt
                 }
                 return newDt
-            }))
-        })
+            }));
+        });
+        setTimeout(() => {
+            loading.hideLoading();
+        }, 500);
     }, []);
     return (
         <DashboardPage>
-            <Table<DataType> columns={columns} dataSource={users} size="middle" />
+            <Table<DataType> columns={columns} dataSource={productCategories} size="large" />
         </DashboardPage>
     )
 }

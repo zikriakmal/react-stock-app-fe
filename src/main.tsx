@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router";
 import "./index.css";
 
-import App from "./App.tsx";
 import LoginPage from "./page/LoginPage";
 import UsersPage from "./page/UsersPage";
 import { LoadingProvider } from "./contexts/LoadingContext.tsx";
@@ -18,12 +17,16 @@ createRoot(document.getElementById("root")!).render(
     <LoadingProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<MainPage />} />
+
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<MainPage />} />
+
           <Route path="/users" element={<UsersPage />} />
+
           <Route path="/products" element={<ProductsPage />} />
+
           <Route path="/product-categories" element={<ProductCategoriesPage />} />
+
           <Route path="/stocks" element={<StocksPage />} />
 
           {/* No match / 404 route */}

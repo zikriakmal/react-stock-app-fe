@@ -1,9 +1,18 @@
 import { Button } from 'antd'
 import { useNavigate } from 'react-router'
 import './App.css'
+import { useEffect } from 'react';
 
 function App() {
   const navigate = useNavigate();
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      navigate('/dashboard');
+    } else {
+      navigate('/login');
+    }
+  }, [])
 
   return (
     <>

@@ -3,3 +3,28 @@
 .root {
     flex:1;
 }
+
+
+.left-side-link{
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+    font-size:14px;
+}
+
+.left-side-link:hover {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+.ant-breadcrumb-link{
+  color: #000000 !important;
+}
+
+.ant-breadcrumb a{
+  color: #000000 !important;
+}
+
+button:disabled{
+  color: grey !important;
+}
