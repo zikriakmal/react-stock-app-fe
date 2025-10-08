@@ -26,8 +26,8 @@ const columns: TableColumnsType<DataType> = [
         title: 'Transaction type',
         dataIndex: 'transaction_type',
         align: 'center',
-        render: (value: string) => <div className="flex-1 flex justify-center items-center">{(value === 'IN' ? <p className="text-xs px-8 bg-green-600 rounded-sm text-center text-white font-bold">IN</p> :
-            <p className="text-xs px-8 bg-red-600 rounded-sm  text-center text-white font-bold">OUT</p>)}</div>
+        render: (value: string) => <div className="flex-1 flex justify-center items-center">{(value === 'IN' ? <p className="text-xs w-18 bg-green-600 rounded-sm text-center text-white font-bold">IN</p> :
+            <p className="text-xs w-18 bg-red-600 rounded-sm  text-center text-white font-bold">OUT</p>)}</div>
     },
     {
         title: 'Created At',

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllUsers, type User } from "../../services/users-service";
 import DashboardPage from "../DashboardPage";
+import { UserOutlined } from "@ant-design/icons";
 
 interface DataType extends User {
     key: React.Key;
@@ -20,29 +21,25 @@ const MainPage = () => {
     }, []);
     return (
         <DashboardPage>
-            <div>
-                <p className="text-lg text-white">Welcome {localStorage.getItem('email')}, how are you today ?</p>
+            <div className="bg-white p-10 rounded-sm min-h-full">
+                <p className="text-md text-black ">Welcome <span className="font-semibold italic">{localStorage.getItem('email')}</span>, how are you today ?</p>
                 <div className="flex flex-row flex-1 p-20 gap-10 justify-center flex-wrap">
-                    <div className="shadow-md  w-52 h hover:scale-110 hover:cursor-pointer transition bg-white items-center justify-center p-10 text-center gap-5 flex-col flex rounded-sm">
-                        <p className="font-sans text-xs text-pink-600">Total Users</p>
-                        <p className="font-semibold text-xl">{users.length}</p>
-                    </div>
-                    <div className="shadow-md w-52 hover:scale-110 hover:cursor-pointer transition bg-white items-center justify-center p-10 text-center gap-5 flex-col flex rounded-sm">
-                        <p className="font-sans text-xs text-purple-900">Total Transactions</p>
-                        <p className="font-semibold text-xl">{users.length}</p>
-                    </div>
-                    <div className="shadow-md w-52 h hover:scale-110 hover:cursor-pointer transition bg-white items-center justify-center p-10 text-center gap-5 flex-col flex rounded-sm">
-                        <p className="font-sans text-xs text-blue-950">Total Products</p>
-                        <p className="font-semibold text-xl">{users.length}</p>
-                    </div>
-                    <div className="shadow-md w-52 h hover:scale-110 hover:cursor-pointer transition bg-white items-center justify-center p-10 text-center gap-5 flex-col flex rounded-sm">
-                        <p className="font-sans text-xs text-orange-900">Total Product Categories</p>
-                        <p className="font-semibold text-xl">{users.length}</p>
-                    </div>
+                    <Card icon={<UserOutlined />} color="text-pink-600" title="Total Users" value={users.length} />
+                    <Card icon={<UserOutlined />} color="text-purple-600" title="Total Transactions" value={users.length} />
+                    <Card icon={<UserOutlined />} color="text-blue-600" title="Total Products" value={users.length} />
+                    <Card icon={<UserOutlined />} color="text-orange-600" title="Total Categories" value={users.length} />
                 </div>
             </div>
         </DashboardPage>
     )
 }
+
+const Card = ({ icon, color, title, value }: { icon: React.ReactNode; color: string; title: string; value: number }) => (
+    <div className="shadow-md w-52 hover:scale-110 hover:cursor-pointer transition bg-white items-center justify-center p-10 text-center gap-3 flex-col flex rounded-sm">
+        {/* <div className={`${color} w-8 h-8`}>{icon}</div> */}
+        <p className={`font-sans text-xs ${color}`}>{title}</p>
+        <p className="font-semibold text-xl">{value}</p>
+    </div>
+);
 
 export default MainPage;
