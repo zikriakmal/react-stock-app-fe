@@ -15,7 +15,6 @@ api.interceptors.request.use(
     (config) => {
         // Example: attach token
         const token = localStorage.getItem("accessToken");
-        console.log(token,"what is token");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -28,7 +27,6 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response.data, // simplify response
     (error) => {
-        console.error("API Error:", error.response || error.message);
         return Promise.reject(error);
     }
 );

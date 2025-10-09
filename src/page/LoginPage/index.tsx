@@ -5,10 +5,13 @@ import { useNavigate } from "react-router";
 import { useLoading } from "../../contexts/LoadingContext";
 import { postData } from "../../services/api";
 import loginFormSchema from "./schema";
+import { useMessage } from "../../contexts/MessageContext";
+import type { AxiosError } from "axios";
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const { showLoading, hideLoading } = useLoading();
+    const { error, success } = useMessage();
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
@@ -31,16 +34,21 @@ const LoginPage = () => {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(true);
                     showLoading();
-                    postData('auth/login', values).then((dt) => {
-                        setDataToLocalStorage(dt?.data?.user?.email, dt?.data?.access_token);
+                    postData('auth/login', values).then((dt: any) => {
+                        const data = dt?.data;
+                        setDataToLocalStorage(
+                            data?.user?.email,
+                            data?.access_token
+                        );
                         resetForm();
                         setSubmitting(false);
                         hideLoading();
+                        success(dt?.message)
                         navigate('/');
-                    }).catch((e) => {
-                        console.log(e);
+                    }).catch((e: AxiosError<any>) => {
                         resetForm();
                         hideLoading();
+                        error(e?.response?.data?.message ?? "");
                         setSubmitting(false);
                     })
                 }}
@@ -51,12 +59,12 @@ const LoginPage = () => {
                             <h1 className="text-white text-center text-xl font-sans font-semibold pb-8 ">LOGIN</h1>
                             <div>
                                 <p className="text-left mb-2 text-white">Email</p>
-                                <Input size="large" type="email" placeholder="Email" {...getFieldProps("email")} />
+                                <Input autoComplete="email" size="large" type="email" placeholder="Email" {...getFieldProps("email")} />
                                 {errors.email && touched.email ? <p className="text-red-400 text-xs italic mt-0.5">{errors.email}</p> : null}
                             </div>
                             <div>
                                 <p className="text-left mb-2 text-white">Password</p>
-                                <Input size="large" type="password" placeholder="Password" {...getFieldProps("password")} />
+                                <Input autoComplete="current-password" size="large" type="password" placeholder="Password" {...getFieldProps("password")} />
                                 {errors.password && touched.password ? <p className="text-red-400 text-xs italic mt-0.5">{errors.password}</p> : null}
                             </div>
                             <div className="flex-1 flex items-end">
