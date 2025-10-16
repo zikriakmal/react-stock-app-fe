@@ -176,7 +176,7 @@ const ProductsPage = () => {
                         price: 0.00,
                         product_category_id: undefined
                     }}
-                    onSubmit={(dt, { setSubmitting }) => {
+                    onSubmit={(dt, { setSubmitting, resetForm }) => {
                         setSubmitting(true);
                         loading.showLoading();
                         createProduct({
@@ -189,16 +189,17 @@ const ProductsPage = () => {
                             setSubmitting(false);
                             setOpenModalCreate(false);
                             loading.hideLoading();
-                            success("success update product");
+                            resetForm();
+                            success("success create product");
                         }).catch(() => {
                             loading.hideLoading();
-                            error('failed to update product');
+                            error('failed to create product');
                         })
 
                     }}
                     innerRef={updateFormikRef}
                 >
-                    {({ values, setFieldValue, handleSubmit, isSubmitting, touched, errors, isValid, getFieldProps }) => (
+                    {({ resetForm, values, setFieldValue, handleSubmit, isSubmitting, touched, errors, isValid, getFieldProps }) => (
                         <form onSubmit={handleSubmit} className="flex flex-col gap-2"  >
                             <div>
                                 <p className="text-left mb-2 text-black">name</p>
@@ -234,7 +235,10 @@ const ProductsPage = () => {
                                 {errors.product_category_id && touched.product_category_id ? <p className="text-red-400 text-xs italic mt-0.5">{errors.product_category_id}</p> : null}
                             </div>
                             <div className="flex flex-row mt-10 justify-end gap-2 items-center">
-                                <Button key="back" variant="text" color="magenta" size="middle" onClick={() => setOpenModalCreate(false)}>
+                                <Button key="back" variant="text" color="magenta" size="middle" onClick={() => {
+                                    resetForm()
+                                    setOpenModalCreate(false)
+                                }}>
                                     Cancel
                                 </Button>
                                 <Button
