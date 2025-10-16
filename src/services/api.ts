@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 // Create an axios instance
-const api = axios.create({
+export const api = axios.create({
     baseURL: "http://localhost:8000/api/", // replace with your base URL
     timeout: 10000, // request timeout (ms)
     headers: {
@@ -25,8 +25,8 @@ api.interceptors.request.use(
 
 // Response interceptor (optional)
 api.interceptors.response.use(
-    (response) => response.data, // simplify response
-    (error) => {
+    (response) => response.data,
+    (error: AxiosError) => {
         return Promise.reject(error);
     }
 );

@@ -24,4 +24,20 @@ const getAllUsers = async (): Promise<ApiType<Array<User>>> => {
     }
 }
 
-export { getAllUsers };
+const getMyInfo = async (): Promise<ApiType<User | null>> => {
+    try {
+        const data = await getData('users/my-info');
+        return {
+            data: data.data,
+            error: false
+        };
+    }
+    catch (e) {
+        return {
+            data: null,
+            error: true
+        };
+    }
+}
+
+export { getAllUsers, getMyInfo };

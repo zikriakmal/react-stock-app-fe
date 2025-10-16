@@ -16,8 +16,8 @@ const DashboardPage: React.FC<any> = (props) => {
     const items: MenuProps['items'] = [
         {
             label: (
-                <div onClick={() => window.alert('next development')}>
-                    <SettingOutlined /> Settings
+                <div onClick={() => navigation('/settings')}>
+                    <SettingOutlined /> User Settings
                 </div>
             ),
             key: '1',

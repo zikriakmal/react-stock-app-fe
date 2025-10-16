@@ -68,7 +68,7 @@ const LoginPage = () => {
                                 {errors.password && touched.password ? <p className="text-red-400 text-xs italic mt-0.5">{errors.password}</p> : null}
                             </div>
                             <div className="flex-1 flex items-end">
-                                <Button className="flex-1" disabled={isSubmitting || !isValid} htmlType="submit" size="large" color="pink" variant="solid">Login</Button>
+                                <Button loading={isSubmitting} className="flex-1" disabled={isSubmitting || !isValid} htmlType="submit" size="large" color="pink" variant="solid">Login</Button>
                             </div>
                         </div>
                     </form>
