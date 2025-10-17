@@ -1,6 +1,5 @@
 import '@ant-design/v5-patch-for-react-19';
 import { Route, Routes } from "react-router";
-import "./index.css";
 
 import MainPage from "../page/HomePage/index.tsx";
 import LoginPage from "../page/LoginPage";

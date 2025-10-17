@@ -1,4 +1,4 @@
-import { getData, type ApiType } from "./api";
+import { getData, postData, type ApiType } from "./api";
 import type { Product } from "./products-service";
 
 export interface StockTransaction {
@@ -31,5 +31,27 @@ const getAllStockTransactions = async (): Promise<ApiType<Array<StockTransaction
     }
 }
 
+const createStockTransaction = async (payload: {
+    product_id: number,
+    transaction_type: string,
+    quantity: number,
+    reference_no: string,
+    notes: string
+}): Promise<ApiType<StockTransaction | null>> => {
+    try {
+        const data = await postData('stock_transactions', payload);
+        return {
+            data: data.data,
+            error: false
+        };
+    }
+    catch (e) {
+        return {
+            data: null,
+            error: true
+        };
+    }
+}
 
-export { getAllStockTransactions }
+
+export { getAllStockTransactions, createStockTransaction }

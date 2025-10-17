@@ -1,8 +1,10 @@
-import { Table, type TableColumnsType } from "antd";
+import { FileAddFilled } from "@ant-design/icons";
+import { Button, Table, type TableColumnsType } from "antd";
 import { useEffect, useState } from "react";
-import type { Product } from "../../services/products-service";
+import { getAllProduct, type Product } from "../../services/products-service";
 import { getAllStockTransactions, type StockTransaction } from "../../services/stock-service";
 import DashboardPage from "../DashboardPage";
+import { ModalCreateStockTransaction } from "./modals";
 
 interface DataType extends StockTransaction {
     key: React.Key;
@@ -45,7 +47,18 @@ const columns: TableColumnsType<DataType> = [
 
 const StockTransactionsPage = () => {
     const [stockTransactions, setStockTransactions] = useState<DataType[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
+
+    const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
+    // const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
+    // const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
+
     useEffect(() => {
+        getStockTransactions();
+        getProducts();
+    }, []);
+
+    const getStockTransactions = () => {
         getAllStockTransactions().then((dt) => {
             setStockTransactions(dt.data.map((dt) => {
                 const newDt = {
@@ -55,10 +68,34 @@ const StockTransactionsPage = () => {
                 return newDt
             }))
         })
-    }, []);
+    };
+
+    const getProducts = () => {
+        getAllProduct().then((dt) => {
+            setProducts(dt.data.map((dt) => {
+                const newDt = {
+                    key: dt.id.toString(),
+                    ...dt
+                }
+                return newDt
+            }))
+        })
+    };
+
     return (
         <DashboardPage>
+            <div className="pb-2">
+                <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="middle">
+                    <FileAddFilled color="magenta" /> Create Transaction
+                </Button>
+            </div>
             <Table<DataType> columns={columns} dataSource={stockTransactions} size="large" />
+            <ModalCreateStockTransaction
+                products={products}
+                openModalCreate={openModalCreate}
+                setOpenModalCreate={setOpenModalCreate}
+                getStockTransactions={getStockTransactions}
+            />
         </DashboardPage>
     )
 }
