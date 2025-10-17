@@ -22,7 +22,11 @@ const SettingsPage = () => {
             .then((dt) => {
                 setUser(dt?.data);
             })
-            .finally(() => hideLoading());
+            .finally(() =>
+                setTimeout(() => {
+                    hideLoading();
+                }, 500)
+            );
     };
 
     useEffect(() => {

@@ -31,6 +31,7 @@ const ModalUpdateProduct = ({ openModalUpdate, setOpenModalUpdate, selectedProdu
             footer={false}
         >
             <Formik<ProductUpdate>
+                enableReinitialize={true}
                 validationSchema={productFormSchema}
                 initialValues={{
                     name: selectedProduct?.name ?? "",

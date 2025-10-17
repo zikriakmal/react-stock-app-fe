@@ -43,7 +43,7 @@ const LoginPage = () => {
                         resetForm();
                         setSubmitting(false);
                         hideLoading();
-                        success(dt?.message)
+                        success("welcome " + data?.user?.name);
                         navigate('/');
                     }).catch((e: AxiosError<any>) => {
                         resetForm();

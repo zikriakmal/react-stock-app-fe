@@ -2,6 +2,7 @@ import { HomeFilled, LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-
 import { Breadcrumb, Dropdown, type MenuProps } from 'antd';
 import React, { useEffect } from 'react';
 import { Link, useLocation, useNavigate } from "react-router";
+import Clock from '../../components/molecules/Clock';
 
 
 const DashboardPage: React.FC<any> = (props) => {
@@ -44,7 +45,7 @@ const DashboardPage: React.FC<any> = (props) => {
                         to={'/stocks'}>{'Transactions'}</Link>
                     <div className='w-full h-[0.2px] bg-white' />
                     <div className='flex flex-col gap-10'>
-                        <p className='text-center text-white font-stretch-condensed'>{'MASTER DATA'}</p>
+                        <p className='ml-2 text-white font-stretch-condensed'>{'MASTER DATA'}</p>
                         <Link className={(location.pathname === '/users' ? 'bg-white drop-shadow-2x px-10 !text-black font-bold ' : "") + 'left-side-link hover:scale-105 transition'}
                             to={'/users'}>Users</Link>
                         <Link className={(location.pathname === '/products' ? 'bg-white drop-shadow-2x px-10 !text-black font-bold ' : "") + 'left-side-link  hover:scale-105 transition'}
@@ -72,9 +73,12 @@ const DashboardPage: React.FC<any> = (props) => {
                         />
                     }
 
+                    <div className='flex-1 justify-center items-center flex'>
+                        <Clock />
+                    </div>
                     <div>
                         <Dropdown menu={{ items }} trigger={['click']}>
-                            <div className='flex flex-row items-center gap-2 cursor-pointer hover:bg-gray-200 p-2 rounded-2xl hover:-translate-y-2 transition px-4  hover:shadow-sm'>
+                            <div className='flex flex-row items-center gap-2 cursor-pointer hover:bg-gray-200 p-2 rounded-2xl hover:-translate-y-0.5 transition px-4  hover:shadow-sm'>
                                 <p className='text-sm font-stretch-110%'>{localStorage.getItem('email')}</p>
                                 <div className='h-12 w-12 items-center justify-center flex flex-col rounded-full bg-gray-100' onClick={(e) => e.preventDefault()}>
                                     <UserOutlined style={{ fontSize: 18 }} />

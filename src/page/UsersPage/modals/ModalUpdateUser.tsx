@@ -1,20 +1,21 @@
 import { Button, Input, Modal } from "antd";
 import { Formik } from "formik";
 import { useMessage } from "../../../contexts/MessageContext";
-import type { ProductCategory } from "../../../services/product-categories-service";
-import { updateProductCategoryById } from "../../../services/product-categories-service";
-import productFormSchema from "../schema";
+import { updateUserById, type User } from "../../../services/users-service";
+import userFormSchema from "../schema";
 
 
-interface ProductCategoryUpdate {
+interface UserUpdate {
     name: string,
+    email: string,
+    password: string,
 }
 
-const ModalUpdateProductCategory = ({ openModalUpdate, setOpenModalUpdate, selectedProductCategory, getProductCategories }: {
+const ModalUserProduct = ({ openModalUpdate, setOpenModalUpdate, selectedUser, getUsers }: {
     openModalUpdate: boolean,
     setOpenModalUpdate: (val: boolean) => void,
-    selectedProductCategory: ProductCategory | null | undefined,
-    getProductCategories: () => void,
+    selectedUser: User | null | undefined,
+    getUsers: () => void,
 }) => {
     const { success, error } = useMessage();
 
@@ -22,26 +23,30 @@ const ModalUpdateProductCategory = ({ openModalUpdate, setOpenModalUpdate, selec
         <Modal
             open={openModalUpdate}
             onCancel={() => setOpenModalUpdate(false)}
-            title={`Update product "${selectedProductCategory?.name}"`}
+            title={`Update product "${selectedUser?.name}"`}
             footer={false}
         >
-            <Formik<ProductCategoryUpdate>
+            <Formik<UserUpdate>
+                validationSchema={userFormSchema}
                 enableReinitialize={true}
-                validationSchema={productFormSchema}
                 initialValues={{
-                    name: selectedProductCategory?.name ?? "",
+                    name: selectedUser?.name ?? "",
+                    email: selectedUser?.email ?? "",
+                    password: ''
                 }}
                 onSubmit={(dt, { setSubmitting }) => {
                     setSubmitting(true);
-                    updateProductCategoryById(selectedProductCategory?.id ?? 0, {
+                    updateUserById(selectedUser?.id ?? 0, {
                         name: dt.name,
+                        email: dt.email,
+                        password: dt.password
                     }).then(() => {
-                        getProductCategories();
+                        getUsers();
                         setSubmitting(false);
                         setOpenModalUpdate(false);
-                        success("success update product");
+                        success("success update user");
                     }).catch(() => {
-                        error('failed to update product');
+                        error('failed to update user');
                     })
                 }}
             >
@@ -49,8 +54,18 @@ const ModalUpdateProductCategory = ({ openModalUpdate, setOpenModalUpdate, selec
                     <form onSubmit={handleSubmit} className="flex flex-col gap-2"  >
                         <div>
                             <p className="text-left mb-2 text-black">name</p>
-                            <Input size="large" type="name" placeholder="product name" {...getFieldProps("name")} />
+                            <Input size="large" type="name" placeholder="name" {...getFieldProps("name")} />
                             {errors.name && touched.name ? <p className="text-red-400 text-xs italic mt-0.5">{errors.name}</p> : null}
+                        </div>
+                        <div>
+                            <p className="text-left mb-2 text-black">email</p>
+                            <Input size="large" type="text" placeholder="email" {...getFieldProps("email")} />
+                            {errors.email && touched.email ? <p className="text-red-400 text-xs italic mt-0.5">{errors.email}</p> : null}
+                        </div>
+                        <div>
+                            <p className="text-left mb-2 text-black">password</p>
+                            <Input size="large" type="password" placeholder="password" {...getFieldProps("password")} />
+                            {errors.password && touched.password ? <p className="text-red-400 text-xs italic mt-0.5">{errors.password}</p> : null}
                         </div>
                         <div className="flex flex-row mt-10 justify-end gap-2 items-center">
                             <Button key="back" variant="text" color="magenta" size="middle" onClick={() => setOpenModalUpdate(false)}>
@@ -72,4 +87,4 @@ const ModalUpdateProductCategory = ({ openModalUpdate, setOpenModalUpdate, selec
     )
 }
 
-export default ModalUpdateProductCategory;
+export default ModalUserProduct;

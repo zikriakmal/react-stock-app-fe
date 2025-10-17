@@ -124,7 +124,7 @@ const MainPage = () => {
                                 itemLayout="horizontal"
                                 dataSource={updates}
                                 renderItem={(item, index) => (
-                                    <List.Item>
+                                    <List.Item className="hover:scale-105 hover:z-50 bg-white cursor-pointer hover:border-[0.5px] hover:border-gray-400 hover:rounded-2xl transition">
                                         <List.Item.Meta
                                             avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
                                             title={<a href="https://ant.design">{item.title}</a>}
