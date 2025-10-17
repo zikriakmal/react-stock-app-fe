@@ -43,7 +43,7 @@ const columns: TableColumnsType<DataType> = [
     },
 ];
 
-const StocksPage = () => {
+const StockTransactionsPage = () => {
     const [stockTransactions, setStockTransactions] = useState<DataType[]>([]);
     useEffect(() => {
         getAllStockTransactions().then((dt) => {
@@ -63,4 +63,4 @@ const StocksPage = () => {
     )
 }
 
-export default StocksPage;
+export default StockTransactionsPage;

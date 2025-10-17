@@ -5,17 +5,13 @@ import { getAllProduct, type Product } from "../../services/products-service";
 import { getAllStockTransactions, type StockTransaction } from "../../services/stock-service";
 import { getAllUsers, type User } from "../../services/users-service";
 import DashboardPage from "../DashboardPage";
-
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import { Avatar, List } from "antd";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-
-
-
-const MainPage = () => {
+const HomePage = () => {
     const [users, setUsers] = useState<User[]>();
     const [products, setProducts] = useState<Product[]>();
     const [productCategories, setProductCategories] = useState<ProductCategory[]>();
@@ -149,4 +145,4 @@ const Card = ({ color, title, value }: { icon: React.ReactNode; color: string; t
     </div>
 );
 
-export default MainPage;
+export default HomePage;
