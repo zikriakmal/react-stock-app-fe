@@ -98,8 +98,8 @@ const UsersPage = () => {
     return (
         <DashboardPage>
             <div className="pb-2">
-                <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="large">
-                    <FileAddFilled color="magenta" /> create
+                <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="middle">
+                    <FileAddFilled color="magenta" /> Add Users
                 </Button>
             </div>
             <Table<DataType> columns={columns} dataSource={users} size="large" />

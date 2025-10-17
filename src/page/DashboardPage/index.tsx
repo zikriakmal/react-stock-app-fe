@@ -58,8 +58,9 @@ const DashboardPage: React.FC<any> = (props) => {
             <div className='bg-gray-50/60 backdrop-blur-sm flex-1 flex flex-col min-h-dvh'>
                 <div className='flex flex-row justify-between bg-white/60  px-10 pt-0 pb-2.5     items-center'>
                     {location.pathname === '/' ?
-                        <a className='!text-pink-600 font-semibold text-sm hover:-translate-y-1 transition p-2' href={'/'}><HomeFilled className='pr-1' /> Home</a> :
+                        <a className='!text-pink-600 w-32 font-semibold text-sm hover:-translate-y-1 transition p-2' href={'/'}><HomeFilled className='pr-1' /> Home</a> :
                         <Breadcrumb
+                            className='w-32'
                             items={
                                 [
                                     {
@@ -72,7 +73,6 @@ const DashboardPage: React.FC<any> = (props) => {
                             }
                         />
                     }
-
                     <div className='flex-1 justify-center items-center flex'>
                         <Clock />
                     </div>

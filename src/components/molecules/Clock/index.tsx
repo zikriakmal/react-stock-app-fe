@@ -11,17 +11,8 @@ export default function Clock(): JSX.Element {
     const hours = now.getHours().toString().padStart(2, "0");
     const minutes = now.getMinutes().toString().padStart(2, "0");
     return (
-        <div className="sm:w-40 items-center justify-center flex" style={{
-            display: "inline-block",
-            padding: "8px 12px",
-            borderRadius: 6,
-            background: "#111827",
-            color: "white",
-            fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial",
-            fontSize: 16,
-            fontWeight: 600
-        }}>
-            <p className="text-center font-mono">
+        <div className="sm:w-40 rounded-sm inline-block  items-center justify-center bg-[#111827]" style={{}}>
+            <p className="text-sm py-2 px-2 text-center font-mono font-bold text-white">
                 {hours}
                 <span className="animate-pulse">:</span>
                 {minutes}

@@ -90,8 +90,8 @@ const ProductCategoriesPage = () => {
     return (
         <DashboardPage>
             <div className="pb-2">
-                <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="large">
-                    <FileAddFilled color="magenta" /> create
+                <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="middle">
+                    <FileAddFilled color="magenta" /> Add Product Category 
                 </Button>
             </div>
             <Table<DataType> columns={columns} dataSource={productCategories} size="large" />

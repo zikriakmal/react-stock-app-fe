@@ -48,7 +48,7 @@ const ProductsPage = () => {
                     <div className="flex flex-row items-center flex-wrap justify-center">
                         {value.map((dt) => {
                             return (
-                                <p className="bg-amber-600 max-w-16 font-semibold rounded-sm text-[8px] text-white p-1">
+                                <p key={dt.id} className="bg-amber-600 max-w-16 font-semibold rounded-sm text-[8px] text-white p-1">
                                     {dt.name}
                                 </p>)
                         })}
@@ -132,8 +132,8 @@ const ProductsPage = () => {
     return (
         <DashboardPage>
             <div className="pb-2">
-                <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="large">
-                    <FileAddFilled color="magenta" /> create
+                <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="middle">
+                    <FileAddFilled color="magenta" /> Add Product
                 </Button>
             </div>
             <Table<DataType> columns={columns} dataSource={products} size="large" />
