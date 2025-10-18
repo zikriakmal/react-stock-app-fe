@@ -1,6 +1,6 @@
 import { DeleteFilled, EditFilled, FileAddFilled } from "@ant-design/icons";
 import { Button, Table, type TableColumnsType } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getAllProductCategory, type ProductCategory } from "../../services/product-categories-service";
 import { getAllProduct, type Product } from "../../services/products-service";
@@ -10,7 +10,7 @@ import { ModalCreateProduct, ModalDeleteProduct, ModalUpdateProduct } from "./mo
 interface DataType extends Product {
     key: React.Key;
 }
-const ProductsPage = () => {
+const ProductsPage: React.FC<any> = () => {
     const columns: TableColumnsType<DataType> = [
         {
             title: 'ID',

@@ -1,7 +1,7 @@
 // Clock.tsx
 import { useEffect, useState, type JSX } from "react";
 
-export default function Clock(): JSX.Element {
+const Clock = (): JSX.Element => {
     const [now, setNow] = useState<Date>(() => new Date());
 
     useEffect(() => {
@@ -20,3 +20,5 @@ export default function Clock(): JSX.Element {
         </div>
     );
 }
+
+export default Clock;

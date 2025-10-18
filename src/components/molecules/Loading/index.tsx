@@ -1,7 +1,8 @@
 import { Loading3QuartersOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import type { JSX } from "react";
 
-const Loading = () => {
+const Loading = (): JSX.Element => {
     return (
         <div className="absolute w-full h-full z-50">
             <div className="flex flex-1 flex-col items-center animate-pulse bg-black/40 justify-center h-full w-full">

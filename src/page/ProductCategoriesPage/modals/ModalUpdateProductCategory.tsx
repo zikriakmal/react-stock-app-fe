@@ -22,7 +22,7 @@ const ModalUpdateProductCategory = ({ openModalUpdate, setOpenModalUpdate, selec
         <Modal
             open={openModalUpdate}
             onCancel={() => setOpenModalUpdate(false)}
-            title={`Update product "${selectedProductCategory?.name}"`}
+            title={`Update Product Category "${selectedProductCategory?.name}"`}
             footer={false}
         >
             <Formik<ProductCategoryUpdate>
@@ -39,22 +39,22 @@ const ModalUpdateProductCategory = ({ openModalUpdate, setOpenModalUpdate, selec
                         getProductCategories();
                         setSubmitting(false);
                         setOpenModalUpdate(false);
-                        success("success update product");
+                        success("success update product category");
                     }).catch(() => {
-                        error('failed to update product');
+                        error('failed to update product category');
                     })
                 }}
             >
                 {({ handleSubmit, isSubmitting, touched, errors, isValid, getFieldProps }) => (
                     <form onSubmit={handleSubmit} className="flex flex-col gap-2"  >
                         <div>
-                            <p className="text-left mb-2 text-black">name</p>
+                            <p className="text-left mb-2 text-black">Name</p>
                             <Input size="large" type="name" placeholder="product name" {...getFieldProps("name")} />
                             {errors.name && touched.name ? <p className="text-red-400 text-xs italic mt-0.5">{errors.name}</p> : null}
                         </div>
                         <div className="flex flex-row mt-10 justify-end gap-2 items-center">
                             <Button key="back" variant="text" color="magenta" size="middle" onClick={() => setOpenModalUpdate(false)}>
-                                Cancel
+                                {'Cancel'}
                             </Button>
                             <Button
                                 htmlType="submit"
@@ -63,7 +63,7 @@ const ModalUpdateProductCategory = ({ openModalUpdate, setOpenModalUpdate, selec
                                 variant="outlined"
                                 color="magenta"
                                 size="middle">
-                                Update
+                                {'Update'}
                             </Button>
                         </div>
                     </form>)}

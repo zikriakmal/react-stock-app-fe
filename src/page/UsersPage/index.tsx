@@ -1,6 +1,6 @@
 import { DeleteFilled, EditFilled, FileAddFilled } from "@ant-design/icons";
 import { Button, Table, type TableColumnsType } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getAllUsers, type User } from "../../services/users-service";
 import DashboardPage from "../DashboardPage";
@@ -11,7 +11,7 @@ interface DataType extends User {
 }
 
 
-const UsersPage = () => {
+const UsersPage: React.FC<any> = () => {
 
     const columns: TableColumnsType<DataType> = [
         {

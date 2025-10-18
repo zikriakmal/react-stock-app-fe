@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAllProductCategory, type ProductCategory } from "../../services/product-categories-service";
 import { getAllProduct, type Product } from "../../services/products-service";
 import { getAllStockTransactions, type StockTransaction } from "../../services/stock-service";
@@ -11,7 +11,7 @@ import { Avatar, List } from "antd";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const HomePage = () => {
+const HomePage: React.FC<any> = () => {
     const [users, setUsers] = useState<User[]>();
     const [products, setProducts] = useState<Product[]>();
     const [productCategories, setProductCategories] = useState<ProductCategory[]>();

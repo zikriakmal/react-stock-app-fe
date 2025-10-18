@@ -24,7 +24,7 @@ const ModalCreateProductCatgory = ({
         <Modal
             open={openModalCreate}
             onCancel={() => setOpenModalCreate(false)}
-            title="Add Product"
+            title="Add Product Category"
             footer={false}
         >
             <Formik<ProductCatgoryCreate>

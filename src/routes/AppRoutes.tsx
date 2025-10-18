@@ -1,14 +1,14 @@
-import '@ant-design/v5-patch-for-react-19';
 import { Route, Routes } from "react-router";
-
-import MainPage from "../page/HomePage/index.tsx";
-import LoginPage from "../page/LoginPage";
-import NotFoundPage from "../page/NotFoundPage";
-import ProductCategoriesPage from "../page/ProductCategoriesPage/index.tsx";
-import ProductsPage from "../page/ProductsPage/index.tsx";
-import SettingsPage from '../page/SettingsPage/index.tsx';
-import StockTransactionsPage from "../page/StockTransactionsPage/index.tsx";
-import UsersPage from "../page/UsersPage";
+import {
+    LoginPage,
+    MainPage,
+    NotFoundPage,
+    ProductCategoriesPage,
+    ProductsPage,
+    SettingsPage,
+    StockTransactionsPage,
+    UsersPage
+} from '../page';
 
 const AppRoutes = () => {
     return (
@@ -18,7 +18,7 @@ const AppRoutes = () => {
             <Route path="/users" element={<UsersPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/product-categories" element={<ProductCategoriesPage />} />
-            <Route path="/stocks" element={<StockTransactionsPage />} />
+            <Route path="/stock-transactions" element={<StockTransactionsPage />} />
             <Route path="/settings" element={<SettingsPage />} />
             <Route path="*" element={<NotFoundPage />} />
         </Routes>

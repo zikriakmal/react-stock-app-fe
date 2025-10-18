@@ -1,6 +1,6 @@
 import { DeleteFilled, EditFilled, FileAddFilled } from "@ant-design/icons";
 import { Button, Table, type TableColumnsType } from "antd";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getAllProductCategory, type ProductCategory } from "../../services/product-categories-service";
 import DashboardPage from "../DashboardPage";
@@ -13,7 +13,7 @@ interface DataType extends ProductCategory {
 }
 
 
-const ProductCategoriesPage = () => {
+const ProductCategoriesPage: React.FC<any> = () => {
     const columns: TableColumnsType<DataType> = [
         {
             title: 'ID',
@@ -91,7 +91,7 @@ const ProductCategoriesPage = () => {
         <DashboardPage>
             <div className="pb-2">
                 <Button onClick={() => setOpenModalCreate(true)} variant="filled" color="magenta" size="middle">
-                    <FileAddFilled color="magenta" /> Add Product Category 
+                    <FileAddFilled color="magenta" /> Add Product Category
                 </Button>
             </div>
             <Table<DataType> columns={columns} dataSource={productCategories} size="large" />

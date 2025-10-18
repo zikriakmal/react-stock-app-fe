@@ -1,13 +1,13 @@
 import { SettingOutlined } from "@ant-design/icons";
 import { Button, Input, Progress } from "antd";
 import { Formik } from "formik";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLoading } from "../../contexts/LoadingContext";
 import { getMyInfo, type User } from "../../services/users-service";
 import DashboardPage from "../DashboardPage";
 import settingsSchema from "./schema";
 
-const SettingsPage = () => {
+const SettingsPage: React.FC<any> = () => {
     const [user, setUser] = useState<User | null>(null);
     const { showLoading, hideLoading } = useLoading();
     const formikRef = useRef(null);

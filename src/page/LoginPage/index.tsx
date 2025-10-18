@@ -1,6 +1,6 @@
 import { Button, Input } from "antd";
 import { Formik } from "formik";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useLoading } from "../../contexts/LoadingContext";
 import { postData } from "../../services/api";
@@ -8,7 +8,7 @@ import loginFormSchema from "./schema";
 import { useMessage } from "../../contexts/MessageContext";
 import type { AxiosError } from "axios";
 
-const LoginPage = () => {
+const LoginPage: React.FC<any> = () => {
     const navigate = useNavigate();
     const { showLoading, hideLoading } = useLoading();
     const { error, success } = useMessage();
