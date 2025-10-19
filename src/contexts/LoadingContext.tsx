@@ -9,21 +9,33 @@ interface LoadingContextType {
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
-export const LoadingProvider = ({ children }: { children: any }) => {
+export const LoadingProvider = ({ children }: { children: React.ReactNode }) => {
     const [isLoading, setIsLoading] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     const showLoading = () => {
-        setIsLoading(true);
+        setIsVisible(true);
+        requestAnimationFrame(() => setIsLoading(true));
     };
 
     const hideLoading = () => {
         setIsLoading(false);
+        // Wait for fade-out animation before hiding element entirely
+        setTimeout(() => setIsVisible(false), 300);
     };
 
     return (
         <LoadingContext.Provider value={{ isLoading, showLoading, hideLoading }}>
-            {isLoading ? <Loading /> : null}
             {children}
+
+            {isVisible && (
+                <div
+                    className={`fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${isLoading ? "opacity-100" : "opacity-0"
+                        }`}
+                >
+                    <Loading />
+                </div>
+            )}
         </LoadingContext.Provider>
     );
 };
