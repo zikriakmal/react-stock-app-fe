@@ -14,6 +14,16 @@ interface MenuType {
 
 const menu: MenuType[] = [
     {
+        name: '',
+        route: '',
+        children: [
+            {
+                name: "Dashboard",
+                route: "/"
+            }
+        ]
+    },
+    {
         name: 'Inventory Management',
         route: '/inventory-management',
         children: [

@@ -81,8 +81,8 @@ const SettingsPage: React.FC<any> = () => {
                     values,
                     handleChange,
                 }) => (
-                    <form onSubmit={handleSubmit} className="bg-white rounded-sm flex flex-1 flex-row justify-start">
-                        <div className="flex flex-col gap-4 lg:w-3/5 p-10">
+                    <form onSubmit={handleSubmit} className="bg-white xl:w-2/5 rounded-sm flex flex-row justify-start">
+                        <div className="flex flex-col gap-4 flex-1  p-10  ">
                             <p className="text-lg font-semibold">
                                 <SettingOutlined /> User settings
                             </p>
@@ -185,7 +185,7 @@ const SettingsPage: React.FC<any> = () => {
                             </div>
 
                             {/* Submit */}
-                            <div className="flex-1 flex items-end">
+                            <div className="flex-1 flex items-end pt-20">
                                 <Button
                                     loading={isSubmitting}
                                     className="flex-1"
