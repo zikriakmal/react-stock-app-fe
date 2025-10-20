@@ -1,10 +1,10 @@
 import { DeleteFilled, EditFilled, FileAddFilled } from "@ant-design/icons";
-import { Button, Table, type TableColumnsType } from "antd";
+import { Button, Table, type TableColumnsType, type TablePaginationConfig } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLoading } from "../../../contexts/LoadingContext";
+import MainLayout from "../../../layouts/MainLayout";
 import { getAllProductCategory, type ProductCategory } from "../../../services/product-categories-service";
 import { getAllProduct, type Product } from "../../../services/products-service";
-import MainLayout from "../../../layouts/MainLayout";
 import { ModalCreateProduct, ModalDeleteProduct, ModalUpdateProduct } from "./modals";
 
 interface DataType extends Product {
@@ -103,31 +103,48 @@ const ProductsPage: React.FC<any> = () => {
 
     const [selectedProduct, setSelectedProduct] = useState<Product | null>();
 
-    const getProducts = async () => {
-        getAllProduct().then((dt) => {
-            setProducts(dt.data.map((dt) => {
-                const newDt = {
-                    key: dt.id.toString(),
-                    ...dt
-                }
-                return newDt
-            }));
+    const [pagination, setPagination] = useState<TablePaginationConfig>({
+        current: 1,
+        pageSize: 5,
+        total: 0,
+    });
+
+    const getProducts = async (page = 1, perPage = 5) => {
+        loading.showLoading();
+        getAllProduct({ page: page, per_page: perPage }).then((dt) => {
+            const paginatedData = dt?.data;
+            if (paginatedData) {
+                setProducts(paginatedData.data.map((dt) => {
+                    const newDt = {
+                        key: dt.id.toString(),
+                        ...dt
+                    }
+                    return newDt
+                }));
+
+                setPagination({
+                    current: paginatedData.current_page,
+                    pageSize: paginatedData.per_page,
+                    total: paginatedData.total,
+                });
+            }
+        }).finally(() => {
+            setTimeout(() => {
+                loading.hideLoading();
+            }, 500);
         });
     }
 
     useEffect(() => {
-        getAllProductCategory().then((dt) => {
-            setProductCategories(dt.data);
-        })
-    }, [])
-
-    useEffect(() => {
-        loading.showLoading();
-        getProducts();
-        setTimeout(() => {
-            loading.hideLoading();
-        }, 500);
+        getProducts(pagination.current!, pagination.pageSize!);
+        getAllProductCategory({ page: 1, per_page: 100 }).then((dt) => {
+            setProductCategories(dt.data?.data);
+        });
     }, []);
+
+    const handleTableChange = (newPagination: TablePaginationConfig) => {
+        getProducts(newPagination.current!, newPagination.pageSize!);
+    };
 
     return (
         <MainLayout>
@@ -136,7 +153,14 @@ const ProductsPage: React.FC<any> = () => {
                     <FileAddFilled color="magenta" /> Add Product
                 </Button>
             </div>
-            <Table<DataType> columns={columns} dataSource={products} size="large" />
+            <Table<DataType>
+                columns={columns}
+                dataSource={products}
+                pagination={pagination}
+                onChange={handleTableChange}
+                size="large"
+                rowKey="id"
+            />
             <ModalCreateProduct
                 productCategories={productCategories}
                 getProducts={getProducts}

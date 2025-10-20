@@ -1,9 +1,9 @@
 import { DeleteFilled, EditFilled, FileAddFilled } from "@ant-design/icons";
-import { Button, Table, type TableColumnsType } from "antd";
+import { Button, Table, type TableColumnsType, type TablePaginationConfig } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLoading } from "../../../contexts/LoadingContext";
-import { getAllProductCategory, type ProductCategory } from "../../../services/product-categories-service";
 import MainLayout from "../../../layouts/MainLayout";
+import { getAllProductCategory, type ProductCategory } from "../../../services/product-categories-service";
 import ModalCreateProductCatgory from "./modals/ModalCreateProductCategory";
 import ModalDeleteProductCategory from "./modals/ModalDeleteProductCategory";
 import ModalUpdateProductCategory from "./modals/ModalUpdateProductCategory";
@@ -65,28 +65,48 @@ const ProductCategoriesPage: React.FC<any> = () => {
 
     const [selectedProductCategory, setSelectedProductCategory] = useState<ProductCategory | null>();
 
+    const [pagination, setPagination] = useState<TablePaginationConfig>({
+        current: 1,
+        pageSize: 5,
+        total: 0,
+    });
+
     const loading = useLoading();
 
     useEffect(() => {
         getProductCategories()
     }, []);
 
-    const getProductCategories = () => {
+    const getProductCategories = (page: number = 1, perPage: number = 5) => {
         loading.showLoading();
-        getAllProductCategory().then((dt) => {
-            setProductCategories(dt.data.map((dt) => {
-                const newDt = {
-                    key: dt.id.toString(),
-                    ...dt
-                }
-                return newDt
-            }));
+        getAllProductCategory({ page: page, per_page: perPage }).then((dt) => {
+            const paginatedData = dt?.data;
+            if (paginatedData) {
+                setProductCategories(paginatedData.data.map((dt) => {
+                    const newDt = {
+                        key: dt.id.toString(),
+                        ...dt
+                    }
+                    return newDt
+                }));
+                setPagination({
+                    current: paginatedData.current_page,
+                    pageSize: paginatedData.per_page,
+                    total: paginatedData.total,
+                });
+            }
         }).finally(() => {
             setTimeout(() => {
                 loading.hideLoading();
             }, 500)
         });
     }
+
+
+    const handleTableChange = (newPagination: TablePaginationConfig) => {
+        getProductCategories(newPagination.current!, newPagination.pageSize!);
+    };
+
 
     return (
         <MainLayout>
@@ -95,7 +115,14 @@ const ProductCategoriesPage: React.FC<any> = () => {
                     <FileAddFilled color="magenta" /> Add Product Category
                 </Button>
             </div>
-            <Table<DataType> columns={columns} dataSource={productCategories} size="large" />
+            <Table<DataType>
+                columns={columns}
+                dataSource={productCategories}
+                pagination={pagination}
+                onChange={handleTableChange}
+                size="large"
+                rowKey="id"
+            />
             <ModalCreateProductCatgory
                 getProductCategories={getProductCategories}
                 openModalCreate={openModalCreate}

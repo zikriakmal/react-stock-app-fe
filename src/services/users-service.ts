@@ -1,4 +1,4 @@
-import { deleteData, getData, postData, putData, type ApiType, type PaginatedResponse } from "./api";
+import { deleteData, getData, postData, putData, type ApiType, type PaginatedResponse, type PaginateParamsRequest } from "./api";
 export interface User {
     id: number,
     name: string,
@@ -7,7 +7,7 @@ export interface User {
     created_at: Date,
     updated_at: Date,
 }
-const getAllUsers = async (params?: { page?: number; per_page?: number }): Promise<ApiType<PaginatedResponse<User> | null>> => {
+const getAllUsers = async (params?: PaginateParamsRequest): Promise<ApiType<PaginatedResponse<User> | null>> => {
     try {
         const data = await getData('users', params);
         return {

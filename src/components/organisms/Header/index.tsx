@@ -2,9 +2,11 @@ import { HomeFilled, LogoutOutlined, SettingOutlined, UserOutlined } from "@ant-
 import { Breadcrumb, Dropdown, type MenuProps } from "antd";
 import { useNavigate } from "react-router";
 import Clock from "../../molecules/Clock";
+import { useLoading } from "../../../contexts/LoadingContext";
 
 const Header = () => {
     const navigation = useNavigate();
+    const loading = useLoading();
     const items: MenuProps['items'] = [
         {
             label: (
@@ -18,7 +20,11 @@ const Header = () => {
             label: (
                 <div onClick={() => {
                     localStorage.removeItem('accessToken')
-                    navigation('/login');
+                    loading.showLoading();
+                    setTimeout(() => {
+                        loading.hideLoading();
+                        navigation('/login');
+                    }, 500)
                 }}
                 >
                     <LogoutOutlined /> Logout

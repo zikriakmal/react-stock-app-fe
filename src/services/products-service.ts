@@ -1,4 +1,4 @@
-import { deleteData, getData, postData, putData, type ApiType } from "./api";
+import { deleteData, getData, postData, putData, type ApiType, type PaginatedResponse, type PaginateParamsRequest } from "./api";
 import type { ProductCategory } from "./product-categories-service";
 
 
@@ -13,7 +13,14 @@ export interface Product {
     updated_at: Date,
 }
 
-const createProduct = async (payload: { name: string, code: string, price: number, product_category_id: number }): Promise<ApiType<Product | null>> => {
+export interface ProductRequest {
+    name: string,
+    code: string,
+    price: number,
+    product_category_id: number
+}
+
+const createProduct = async (payload: ProductRequest): Promise<ApiType<Product | null>> => {
     try {
         const data = await postData('products/', payload);
         return {
@@ -29,9 +36,9 @@ const createProduct = async (payload: { name: string, code: string, price: numbe
     }
 }
 
-const getAllProduct = async (): Promise<ApiType<Array<Product>>> => {
+const getAllProduct = async (params?: PaginateParamsRequest): Promise<ApiType<PaginatedResponse<Product> | null>> => {
     try {
-        const data = await getData('products');
+        const data = await getData('products', params);
         return {
             data: data.data,
             error: false
@@ -39,13 +46,13 @@ const getAllProduct = async (): Promise<ApiType<Array<Product>>> => {
     }
     catch (e) {
         return {
-            data: [],
+            data: null,
             error: true
         };
     }
 }
 
-const updateProductById = async (id: number, payload: { name: string, code: string, price: number, product_category_id: number }): Promise<ApiType<Product | null>> => {
+const updateProductById = async (id: number, payload: ProductRequest): Promise<ApiType<Product | null>> => {
     try {
         const data = await putData('products/' + id, payload);
         return {
@@ -77,4 +84,5 @@ const deleteProductById = async (id: number): Promise<ApiType<Product | null>> =
     }
 }
 
-export { createProduct, getAllProduct, deleteProductById, updateProductById };
+export { createProduct, deleteProductById, getAllProduct, updateProductById };
+

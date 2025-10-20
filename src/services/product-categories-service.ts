@@ -1,4 +1,4 @@
-import { deleteData, getData, postData, putData, type ApiType } from "./api";
+import { deleteData, getData, postData, putData, type ApiType, type PaginatedResponse, type PaginateParamsRequest } from "./api";
 export interface ProductCategory {
     id: number,
     name: string,
@@ -6,9 +6,9 @@ export interface ProductCategory {
     updated_at?: Date
 }
 
-const getAllProductCategory = async (): Promise<ApiType<Array<ProductCategory>>> => {
+const getAllProductCategory = async (params?: PaginateParamsRequest): Promise<ApiType<PaginatedResponse<ProductCategory> | null>> => {
     try {
-        const data = await getData('product-categories');
+        const data = await getData('product-categories', params);
         return {
             data: data.data,
             error: false
@@ -16,7 +16,7 @@ const getAllProductCategory = async (): Promise<ApiType<Array<ProductCategory>>>
     }
     catch (e) {
         return {
-            data: [],
+            data: null,
             error: true
         };
     }

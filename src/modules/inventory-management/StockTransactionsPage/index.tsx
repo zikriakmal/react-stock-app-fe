@@ -23,8 +23,14 @@ const StockTransactionsPage: React.FC<any> = () => {
             render: (value: Product) => value.name
         },
         {
+            title: 'Reference No',
+            dataIndex: 'reference_no',
+            align: 'end'
+        },
+        {
             title: 'Quantity',
-            dataIndex: 'quantity'
+            dataIndex: 'quantity',
+            align: 'end'
         },
         {
             title: 'Transaction type',
@@ -83,14 +89,16 @@ const StockTransactionsPage: React.FC<any> = () => {
     };
 
     const getProducts = () => {
-        getAllProduct().then((dt) => {
-            setProducts(dt.data.map((dt) => {
-                const newDt = {
-                    key: dt.id.toString(),
-                    ...dt
-                }
-                return newDt
-            }))
+        getAllProduct({ page: 1, per_page: 100 }).then((dt) => {
+            if (dt.data) {
+                setProducts(dt.data?.data.map((dt) => {
+                    const newDt = {
+                        key: dt.id.toString(),
+                        ...dt
+                    }
+                    return newDt
+                }))
+            }
         });
     };
 

@@ -52,7 +52,7 @@ const SideNavigation = (): JSX.Element => {
     const navigation = useNavigate()
     return (
         <div className='w-64 min-h-dvh border-r-[0.5px] border-r-gray-500 p-10'>
-            <p onClick={() => navigation('/')} className='mb-10 text-center text-white text-2xl font-bold cursor-pointer'>{'Product Stock App'}</p>
+            <p onClick={() => navigation('/')} className='mb-10 text-center text-white text-2xl font-bold cursor-pointer'>{'MY ERP'}</p>
             <div className='flex flex-col gap-5'>
                 {menu.map((dt) => {
                     return (

@@ -1,4 +1,4 @@
-import { getData, postData, type ApiType, type PaginatedResponse } from "./api";
+import { getData, postData, type ApiType, type PaginatedResponse, type PaginateParamsRequest } from "./api";
 import type { Product } from "./products-service";
 
 export interface StockTransaction {
@@ -15,7 +15,7 @@ export interface StockTransaction {
     product: Product;
 }
 
-const getAllStockTransactions = async (params?: { page?: number; per_page?: number }): Promise<ApiType<PaginatedResponse<StockTransaction> | null>> => {
+const getAllStockTransactions = async (params?: PaginateParamsRequest): Promise<ApiType<PaginatedResponse<StockTransaction> | null>> => {
     try {
         const data = await getData('stock_transactions', params);
         return {

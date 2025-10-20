@@ -72,3 +72,8 @@ export interface PaginationLink {
     page: number | null;
     active: boolean;
 }
+
+export interface PaginateParamsRequest {
+    page?: number;
+    per_page?: number;
+}
