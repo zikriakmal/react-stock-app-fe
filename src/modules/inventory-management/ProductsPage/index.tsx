@@ -108,6 +108,14 @@ const ProductsPage: React.FC<any> = () => {
         pageSize: 5,
         total: 0,
     });
+    
+    useEffect(() => {
+        getProducts(pagination.current!, pagination.pageSize!);
+        getAllProductCategory({ page: 1, per_page: 100 }).then((dt) => {
+            setProductCategories(dt.data?.data);
+        });
+    }, []);
+
 
     const getProducts = async (page = 1, perPage = 5) => {
         loading.showLoading();
@@ -134,13 +142,6 @@ const ProductsPage: React.FC<any> = () => {
             }, 500);
         });
     }
-
-    useEffect(() => {
-        getProducts(pagination.current!, pagination.pageSize!);
-        getAllProductCategory({ page: 1, per_page: 100 }).then((dt) => {
-            setProductCategories(dt.data?.data);
-        });
-    }, []);
 
     const handleTableChange = (newPagination: TablePaginationConfig) => {
         getProducts(newPagination.current!, newPagination.pageSize!);
